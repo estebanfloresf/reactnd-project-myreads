@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
+import * as BooksApi from './BooksAPI'
 
 
 class AddBook extends Component {
@@ -12,42 +13,71 @@ class AddBook extends Component {
 
     };
 
-
     state = {
         query: '',
-        bookshelve : 'none'
+        bookshelve: 'none',
+        querybooks: []
     };
+
 
     updateQuery = (query) => {
-        this.setState({query: query.trim()})
+        this.setState(
+            {query: query.trim()},
+
+            this.calllSearch(this.state.query)
+        );
+
     };
 
-    handleChange= (event) => {
+    calllSearch(query) {
 
-        this.setState({bookshelve: event.trim()});
-        console.log(this.state.bookshelve);
-    };
+
+        BooksApi.search(query, 10).then((querybooks) => {
+            this.setState({querybooks});
+        })
+
+    }
+
+    // componentDidMount() {
+    //
+    //     BooksApi.search(this.state.query, 10).then((querybooks) => {
+    //         this.setState({querybooks});
+    //
+    //     })
+    // }
 
 
     render() {
 
-        const books = this.props.books;
+        const querybooks = this.state.querybooks;
         const {query} = this.state;
 
         let showingBooks;
 
         if (query) {
             const match = new RegExp(escapeRegExp(query), 'i');
-            showingBooks = books.filter((book) => match.test(book.title) || match.test(book.authors.toString())            )
+
+            if (querybooks && querybooks.length > 0) {
+
+
+                try {
+                    showingBooks = querybooks.filter((book) => match.test(book.title) || match.test(book.authors.toString()));
+
+                }catch(err){
+                    showingBooks = querybooks.filter((book) => match.test(book.title) );
+                }
+                console.log(showingBooks);
+
+
+                showingBooks.sort(sortBy('title'));
+            }
+
+
         } else {
-            showingBooks = books
+
+            showingBooks = querybooks
 
         }
-
-        // console.log(books[0].authors);
-
-
-        showingBooks.sort(sortBy('title'));
 
 
         return (
@@ -75,38 +105,39 @@ class AddBook extends Component {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {showingBooks.map((book) => (
-                                <li key={book.id}>
 
 
-                                    <div className="book">
-                                        <div className="book-top">
-                                            <div className="book-cover" style={{
-                                                width: 128,
-                                                height: 193,
-                                                backgroundImage: `url(${book.imageLinks.thumbnail})`
-                                            }}/>
-                                            <div className="book-shelf-changer">
-                                                <select  value={this.state.bookshelve} onChange={(event) => this.handleChange(event.target.value)}>
-                                                    <option value="none" disabled>Move to...</option>
-                                                    <option value="currentlyReading">Currently Reading</option>
-                                                    <option value="wantToRead">Want to Read</option>
-                                                    <option value="read">Read</option>
-                                                    <option value="none">None</option>
-                                                </select>
+                        {showingBooks && (
+                            showingBooks.map((book) => (
+                                    <li key={book.id}>
+
+
+                                        <div className="book">
+                                            <div className="book-top">
+                                                <div className="book-cover" style={{
+                                                    width: 128,
+                                                    height: 193,
+                                                    backgroundImage: `url(${book.imageLinks.thumbnail})`
+                                                }}/>
+                                                <div className="book-shelf-changer">
+                                                    <select value={this.state.bookshelve}
+                                                            onChange={(event) => this.handleChange(event.target.value)}>
+                                                        <option value="none" disabled>Move to...</option>
+                                                        <option value="currentlyReading">Currently Reading</option>
+                                                        <option value="wantToRead">Want to Read</option>
+                                                        <option value="read">Read</option>
+                                                        <option value="none">None</option>
+                                                    </select>
+                                                </div>
                                             </div>
+                                            <div className="book-title">{book.title}</div>
+
+                                            {/*<div className="book-authors">{book.authors.toString()}</div>*/}
                                         </div>
-                                        <div className="book-title">{book.title}</div>
 
-                                        <div className="book-authors">{book.authors.toString()}</div>
-                                    </div>
+                                    </li>
 
-                                </li>
-
-
-
-
-
+                                )
                             )
                         )}
                     </ol>

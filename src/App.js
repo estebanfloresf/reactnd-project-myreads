@@ -20,9 +20,16 @@ class BooksApp extends React.Component {
         })
     }
 
-    updateBook(book){
 
-    }
+    updateBook= (book,bookshelve) => {
+
+
+        this.setState((state)=>{
+
+        });
+
+    };
+
 
 
     render() {
