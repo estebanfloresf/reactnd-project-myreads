@@ -39,6 +39,7 @@ class AddBook extends Component {
     render() {
 
         const {query} = this.state;
+        const {handleOnChange} = this.props;
         const querybooks = this.state.querybooks;
 
         let showingBooks = [];
@@ -105,7 +106,7 @@ class AddBook extends Component {
                                                     backgroundImage: `url(${book.imageLinks.thumbnail})`
                                                 }}/>
                                                 <div className="book-shelf-changer">
-                                                    <select   onChange={this.props.handleOnChange(book)}>
+                                                    <select   onChange={(e) => handleOnChange(book,e)}  >
                                                         <option value="none" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>

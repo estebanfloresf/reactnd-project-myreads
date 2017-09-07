@@ -8,7 +8,8 @@ import * as BooksApi from './BooksAPI'
 
 class BooksApp extends React.Component {
     state = {
-        books: []
+        books: [],
+        bookshelve: 'none'
     };
 
 
@@ -21,24 +22,38 @@ class BooksApp extends React.Component {
     }
 
 
-    updateBook = (book) => {
+    updateBook = (book,value) => {
 
 
-        console.log(book);
 
 
-        // this.setState((state) => ({
-        //     books: state.books.filter()
-        //  }));
+        BooksApi.update(book,value.target.value).then();
+
+        console.log(this.state.books);
+
+
+
+        // if(e.target.value === 'wantToRead'){
+        //     alert('hey your book'+book.title+' has been added to your bookshelve '+e.target.value);
+        // }
+
+        // this.setState({
+        //     bookshelve: e.target.value.trim()
+        // });
+        // console.log(value.target.value);
+        // console.log(typeof( value.target.value));
+        //
+        //
 
 
 
     };
 
-    handleOnChange(e) {
-        console.log(e.target.value);
-
-    }
+    // handleOnChange(book,e) {
+    //     console.log(book);
+    //     // console.log(e.target);
+    //
+    // }
 
 
     render() {
@@ -46,12 +61,20 @@ class BooksApp extends React.Component {
         return (
             <div className="app">
 
-                <Route exact path="/" component={ListBooks}/>
+                <Route exact path="/" render={() => (
+                    <ListBooks
+                        books={this.state.books}
+                        handleOnChange={this.updateBook}
+
+
+                    />
+                )}/>
 
                 <Route exact path="/search" render={() => (
                     <AddBook
-                        books={this.state.books}
-                        handleOnChange={this.handleOnChange.bind(this)}
+                        bookshelve={this.state.bookshelve}
+                        handleOnChange={this.updateBook}
+
 
                     />
                 )}/>
