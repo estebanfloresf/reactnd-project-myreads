@@ -8,7 +8,7 @@ import * as BooksApi from './BooksAPI'
 
 class BooksApp extends React.Component {
     state = {
-         books: []
+        books: []
     };
 
 
@@ -21,15 +21,24 @@ class BooksApp extends React.Component {
     }
 
 
-    updateBook= (book,bookshelve) => {
+    updateBook = (book) => {
 
 
-        this.setState((state)=>{
+        console.log(book);
 
-        });
+
+        // this.setState((state) => ({
+        //     books: state.books.filter()
+        //  }));
+
+
 
     };
 
+    handleOnChange(e) {
+        console.log(e.target.value);
+
+    }
 
 
     render() {
@@ -41,7 +50,8 @@ class BooksApp extends React.Component {
 
                 <Route exact path="/search" render={() => (
                     <AddBook
-                      books={this.state.books}
+                        books={this.state.books}
+                        handleOnChange={this.handleOnChange.bind(this)}
 
                     />
                 )}/>

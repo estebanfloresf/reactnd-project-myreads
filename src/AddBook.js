@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import escapeRegExp from 'escape-string-regexp'
-import sortBy from 'sort-by'
+
 import * as BooksApi from './BooksAPI'
 
 
@@ -15,7 +14,6 @@ class AddBook extends Component {
 
     state = {
         query: '',
-        bookshelve: 'none',
         querybooks: []
     };
 
@@ -31,53 +29,40 @@ class AddBook extends Component {
 
     calllSearch(query) {
 
-
         BooksApi.search(query, 10).then((querybooks) => {
             this.setState({querybooks});
         })
 
     }
 
-    // componentDidMount() {
-    //
-    //     BooksApi.search(this.state.query, 10).then((querybooks) => {
-    //         this.setState({querybooks});
-    //
-    //     })
-    // }
-
 
     render() {
 
-        const querybooks = this.state.querybooks;
         const {query} = this.state;
+        const querybooks = this.state.querybooks;
 
-        let showingBooks;
+        let showingBooks = [];
+
 
         if (query) {
-            const match = new RegExp(escapeRegExp(query), 'i');
+
+           //not sure why it was giving an error unless I made the condition to check it is not empty and has 1 item
 
             if (querybooks && querybooks.length > 0) {
 
-
-                try {
-                    showingBooks = querybooks.filter((book) => match.test(book.title) || match.test(book.authors.toString()));
-
-                }catch(err){
-                    showingBooks = querybooks.filter((book) => match.test(book.title) );
-                }
-                console.log(showingBooks);
-
-
-                showingBooks.sort(sortBy('title'));
+                showingBooks = querybooks;
             }
 
 
-        } else {
 
-            showingBooks = querybooks
 
         }
+        else {
+
+            showingBooks = []
+
+        }
+
 
 
         return (
@@ -107,7 +92,7 @@ class AddBook extends Component {
                     <ol className="books-grid">
 
 
-                        {showingBooks && (
+                        {showingBooks.length > 0 && (
                             showingBooks.map((book) => (
                                     <li key={book.id}>
 
@@ -120,8 +105,7 @@ class AddBook extends Component {
                                                     backgroundImage: `url(${book.imageLinks.thumbnail})`
                                                 }}/>
                                                 <div className="book-shelf-changer">
-                                                    <select value={this.state.bookshelve}
-                                                            onChange={(event) => this.handleChange(event.target.value)}>
+                                                    <select   onChange={this.props.handleOnChange(book)}>
                                                         <option value="none" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>
@@ -132,7 +116,7 @@ class AddBook extends Component {
                                             </div>
                                             <div className="book-title">{book.title}</div>
 
-                                            {/*<div className="book-authors">{book.authors.toString()}</div>*/}
+                                            <div className="book-authors">{book.authors? book.authors.toString() : ''}</div>
                                         </div>
 
                                     </li>
