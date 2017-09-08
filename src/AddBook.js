@@ -39,7 +39,7 @@ class AddBook extends Component {
     render() {
 
         const {query} = this.state;
-        const {handleOnChange} = this.props;
+        const {handleOnChange, books} = this.props;
         const querybooks = this.state.querybooks;
 
         let showingBooks = [];
@@ -47,14 +47,21 @@ class AddBook extends Component {
 
         if (query) {
 
-           //not sure why it was giving an error unless I made the condition to check it is not empty and has 1 item
+            //not sure why it was giving an error unless I made the condition to check it is not empty and has 1 item
 
             if (querybooks && querybooks.length > 0) {
 
                 showingBooks = querybooks;
+
+
+                books.forEach(function (book) {
+                    if (showingBooks.includes(book.id)) {
+                        console.log(book);
+                    }
+                });
+
+
             }
-
-
 
 
         }
@@ -63,7 +70,6 @@ class AddBook extends Component {
             showingBooks = []
 
         }
-
 
 
         return (
@@ -103,11 +109,12 @@ class AddBook extends Component {
                                                 <div className="book-cover" style={{
                                                     width: 128,
                                                     height: 193,
-                                                    backgroundImage: `url(${book.imageLinks.thumbnail})`
+                                                    backgroundImage: `url(${book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''})`
                                                 }}/>
                                                 <div className="book-shelf-changer">
-                                                    <select   onChange={(e) => handleOnChange(book,e)}  >
-                                                        <option value="none" disabled>Move to...</option>
+                                                    <select onChange={(e) => handleOnChange(book, e)}
+                                                            value={book.shelf ? book.shelf : 'none'}>
+                                                        <option value="disabled" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>
                                                         <option value="read">Read</option>
@@ -117,7 +124,8 @@ class AddBook extends Component {
                                             </div>
                                             <div className="book-title">{book.title}</div>
 
-                                            <div className="book-authors">{book.authors? book.authors.toString() : ''}</div>
+                                            <div
+                                                className="book-authors">{book.authors ? book.authors.toString() : ''}</div>
                                         </div>
 
                                     </li>

@@ -8,52 +8,75 @@ import * as BooksApi from './BooksAPI'
 
 class BooksApp extends React.Component {
     state = {
-        books: [],
-        bookshelve: 'none'
+        books: []
+
+
     };
 
 
     componentDidMount() {
 
+
         BooksApi.getAll().then((books) => {
             this.setState({books});
 
-        })
+        });
+        console.log(this.state.books);
     }
 
 
-    updateBook = (book,value) => {
+    updateBook = (book, value) => {
+
+        value = value.target.value.trim();
 
 
+        BooksApi.update(book, value).then(res => {
 
 
-        BooksApi.update(book,value.target.value).then();
+            if (value === 'none') {
+                this.setState({
+                    books: this.state.books.filter((b) => b.id !== book.id)
+                })
+            } else {
 
-        console.log(this.state.books);
+                this.setState({
+                    books: this.state.books.map((b) =>{
 
+                        if(book.id===b.id){
+                            return {...book,shelf:value}
+
+                        }
+                        else{
+                            return b
+                        }
+                    })
+                })
+            }
+
+
+            // this.setState(state => ({
+            //
+            //         books: this.state
+            //
+            //     })
+            // )
+
+        });
+
+        //
+        // BooksApi.get(book.id).then(res=>{
+        //     console.log(res);
+        // })
+
+        // console.log(this.state);
 
 
         // if(e.target.value === 'wantToRead'){
         //     alert('hey your book'+book.title+' has been added to your bookshelve '+e.target.value);
         // }
 
-        // this.setState({
-        //     bookshelve: e.target.value.trim()
-        // });
-        // console.log(value.target.value);
-        // console.log(typeof( value.target.value));
-        //
-        //
-
-
 
     };
-
-    // handleOnChange(book,e) {
-    //     console.log(book);
-    //     // console.log(e.target);
-    //
-    // }
 
 
     render() {
@@ -72,7 +95,7 @@ class BooksApp extends React.Component {
 
                 <Route exact path="/search" render={() => (
                     <AddBook
-                        bookshelve={this.state.bookshelve}
+                        books={this.state.books}
                         handleOnChange={this.updateBook}
 
 
