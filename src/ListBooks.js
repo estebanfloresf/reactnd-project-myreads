@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 
-class ListBooks extends Component{
+class ListBooks extends Component {
 
     static propTypes = {
         books: PropTypes.array.isRequired,
@@ -11,15 +11,14 @@ class ListBooks extends Component{
     };
 
 
+    render() {
+        const {handleOnChange, books} = this.props;
 
-    render(){
-        const {handleOnChange,books} = this.props;
+        const currentlyReading = books.filter((book) => book.shelf === 'currentlyReading');
+        const wantToRead = books.filter((book) => book.shelf === 'wantToRead');
+        const read = books.filter((book) => book.shelf === 'read');
 
-        const currentlyReading = books.filter((book)=> book.shelf ==='currentlyReading' );
-        const wantToRead = books.filter((book)=> book.shelf ==='wantToRead' );
-        const read = books.filter((book)=> book.shelf ==='read' );
-
-        return(
+        return (
 
             <div className="list-books">
                 <div className="list-books-title">
@@ -35,36 +34,38 @@ class ListBooks extends Component{
                                     {
                                         currentlyReading.map((book) => (
 
-                                            <li key={book.id}>
+                                                <li key={book.id}>
 
 
-                                                <div className="book">
-                                                    <div className="book-top">
-                                                        <div className="book-cover" style={{
-                                                            width: 128,
-                                                            height: 193,
-                                                            backgroundImage: `url(${book.imageLinks.thumbnail})`
-                                                        }}/>
-                                                        <div className="book-shelf-changer">
-                                                            <select   onChange={(e) => handleOnChange(book,e)} value={book.shelf? book.shelf:'none'}  >
-                                                                <option value="none" disabled>Move to...</option>
-                                                                <option value="currentlyReading">Currently Reading</option>
-                                                                <option value="wantToRead">Want to Read</option>
-                                                                <option value="read">Read</option>
-                                                                <option value="none">None</option>
-                                                            </select>
+                                                    <div className="book">
+                                                        <div className="book-top">
+                                                            <div className="book-cover" style={{
+                                                                width: 128,
+                                                                height: 193,
+                                                                backgroundImage: `url(${book.imageLinks.thumbnail?book.imageLinks.thumbnail:''})`
+                                                            }}/>
+                                                            <div className="book-shelf-changer">
+                                                                <select onChange={(e) => handleOnChange(book, e)}
+                                                                        value={book.shelf ? book.shelf : 'none'}>
+                                                                    <option value="none" disabled>Move to...</option>
+                                                                    <option value="currentlyReading">Currently Reading
+                                                                    </option>
+                                                                    <option value="wantToRead">Want to Read</option>
+                                                                    <option value="read">Read</option>
+                                                                    <option value="none">None</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
+                                                        <div className="book-title">{book.title}</div>
+
+                                                        <div
+                                                            className="book-authors">{book.authors ? book.authors.toString() : ''}</div>
                                                     </div>
-                                                    <div className="book-title">{book.title}</div>
 
-                                                    <div className="book-authors">{book.authors? book.authors.toString() : ''}</div>
-                                                </div>
-
-                                            </li>
+                                                </li>
 
 
                                             )
-
                                         )
                                     }
 
@@ -91,9 +92,11 @@ class ListBooks extends Component{
                                                                 backgroundImage: `url(${book.imageLinks.thumbnail})`
                                                             }}/>
                                                             <div className="book-shelf-changer">
-                                                                <select   onChange={(e) => handleOnChange(book,e)}  value={book.shelf}   >
+                                                                <select onChange={(e) => handleOnChange(book, e)}
+                                                                        value={book.shelf}>
                                                                     <option value="none" disabled>Move to...</option>
-                                                                    <option value="currentlyReading">Currently Reading</option>
+                                                                    <option value="currentlyReading">Currently Reading
+                                                                    </option>
                                                                     <option value="wantToRead">Want to Read</option>
                                                                     <option value="read">Read</option>
                                                                     <option value="none">None</option>
@@ -102,14 +105,14 @@ class ListBooks extends Component{
                                                         </div>
                                                         <div className="book-title">{book.title}</div>
 
-                                                        <div className="book-authors">{book.authors? book.authors.toString() : ''}</div>
+                                                        <div
+                                                            className="book-authors">{book.authors ? book.authors.toString() : ''}</div>
                                                     </div>
 
                                                 </li>
 
 
                                             )
-
                                         )
                                     }
 
@@ -136,9 +139,11 @@ class ListBooks extends Component{
                                                                 backgroundImage: `url(${book.imageLinks.thumbnail})`
                                                             }}/>
                                                             <div className="book-shelf-changer">
-                                                                <select   onChange={(e) => handleOnChange(book,e)}  value={book.shelf}  >
+                                                                <select onChange={(e) => handleOnChange(book, e)}
+                                                                        value={book.shelf}>
                                                                     <option value="none" disabled>Move to...</option>
-                                                                    <option value="currentlyReading">Currently Reading</option>
+                                                                    <option value="currentlyReading">Currently Reading
+                                                                    </option>
                                                                     <option value="wantToRead">Want to Read</option>
                                                                     <option value="read">Read</option>
                                                                     <option value="none">None</option>
@@ -147,14 +152,14 @@ class ListBooks extends Component{
                                                         </div>
                                                         <div className="book-title">{book.title}</div>
 
-                                                        <div className="book-authors">{book.authors? book.authors.toString() : ''}</div>
+                                                        <div
+                                                            className="book-authors">{book.authors ? book.authors.toString() : ''}</div>
                                                     </div>
 
                                                 </li>
 
 
                                             )
-
                                         )
                                     }
 

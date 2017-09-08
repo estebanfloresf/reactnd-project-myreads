@@ -31,7 +31,7 @@ class AddBook extends Component {
 
         BooksApi.search(query, 10).then((querybooks) => {
             this.setState({querybooks});
-        })
+        });
 
     }
 
@@ -55,8 +55,11 @@ class AddBook extends Component {
 
 
                 books.forEach(function (book) {
-                    if (showingBooks.includes(book.id)) {
-                        console.log(book);
+
+                    for(let i=0; i<showingBooks.length;i++){
+                        if(showingBooks[i].id === book.id){
+                            showingBooks[i]['shelf'] = book.shelf
+                        }
                     }
                 });
 
@@ -109,11 +112,11 @@ class AddBook extends Component {
                                                 <div className="book-cover" style={{
                                                     width: 128,
                                                     height: 193,
-                                                    backgroundImage: `url(${book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''})`
+                                                    backgroundImage: `url(${book.imageLinks.thumbnail? book.imageLinks.thumbnail : ''})`
                                                 }}/>
                                                 <div className="book-shelf-changer">
                                                     <select onChange={(e) => handleOnChange(book, e)}
-                                                            value={book.shelf ? book.shelf : 'none'}>
+                                                            value={book.shelf? book.shelf:'none'}>
                                                         <option value="disabled" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>

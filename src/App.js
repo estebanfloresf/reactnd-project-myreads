@@ -54,21 +54,8 @@ class BooksApp extends React.Component {
             }
 
 
-            // this.setState(state => ({
-            //
-            //         books: this.state
-            //
-            //     })
-            // )
-
         });
 
-        //
-        // BooksApi.get(book.id).then(res=>{
-        //     console.log(res);
-        // })
-
-        // console.log(this.state);
 
 
         // if(e.target.value === 'wantToRead'){
