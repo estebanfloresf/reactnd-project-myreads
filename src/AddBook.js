@@ -20,63 +20,63 @@ class AddBook extends Component {
 
     updateQuery = (query) => {
         this.setState(
-            {query: query.trim()},
-
-            this.calllSearch(this.state.query)
+            {query: query},
+            () => {
+                BooksApi.search(query, 10).then((querybooks) => {
+                    this.setState({querybooks});
+                });
+            }
         );
 
     };
 
-    calllSearch(query) {
 
-        BooksApi.search(query, 10).then((querybooks) => {
-            this.setState({querybooks});
-        });
-
-    }
-
-
-    render() {
-
-        const {query} = this.state;
-        const {handleOnChange, books} = this.props;
-        const querybooks = this.state.querybooks;
-
-        let showingBooks = [];
+    loadList = function (query) {
 
 
         if (query) {
 
-            //not sure why it was giving an error unless I made the condition to check it is not empty and has 1 item
 
-            if (querybooks && querybooks.length > 0) {
+            const showingBooks = this.state.querybooks;
 
-                showingBooks = querybooks;
+            if (showingBooks && showingBooks.length > 0) {
 
+                this.props.books.forEach(function (book) {
 
-                books.forEach(function (book) {
-
-                    for(let i=0; i<showingBooks.length;i++){
-                        if(showingBooks[i].id === book.id){
+                    for (let i = 0; i < showingBooks.length; i++) {
+                        if (showingBooks[i].id === book.id) {
                             showingBooks[i]['shelf'] = book.shelf
                         }
                     }
                 });
 
-
+                return showingBooks;
             }
 
 
         }
-        else {
 
-            showingBooks = []
 
-        }
+        return []
 
+
+    };
+
+
+    render() {
+
+        const {query} = this.state;
+        const {handleOnChange} = this.props;
+        let showingBooks = this.loadList(query);
 
         return (
+
+
+
             <div className="search-books">
+
+
+
                 <div className="search-books-bar">
                     <Link className="close-search" to="/">Close</Link>
 
@@ -89,12 +89,17 @@ class AddBook extends Component {
                 However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                 you don't find a specific author or title. Every search is limited by search terms.
                 */}
+
+
                         <input
+                            className="mdl-textfield__input"
+                            id="sample1"
                             type="text"
                             placeholder="Search by title or author"
                             value={query}
                             onChange={(event) => this.updateQuery(event.target.value)}
                         />
+
 
                     </div>
                 </div>
@@ -112,11 +117,16 @@ class AddBook extends Component {
                                                 <div className="book-cover" style={{
                                                     width: 128,
                                                     height: 193,
-                                                    backgroundImage: `url(${book.imageLinks.thumbnail? book.imageLinks.thumbnail : ''})`
+                                                    backgroundImage: `url(${book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193'})`
                                                 }}/>
                                                 <div className="book-shelf-changer">
+
+
+
+
+
                                                     <select onChange={(e) => handleOnChange(book, e)}
-                                                            value={book.shelf? book.shelf:'none'}>
+                                                            value={book.shelf ? book.shelf : 'none'}>
                                                         <option value="disabled" disabled>Move to...</option>
                                                         <option value="currentlyReading">Currently Reading</option>
                                                         <option value="wantToRead">Want to Read</option>
@@ -128,7 +138,7 @@ class AddBook extends Component {
                                             <div className="book-title">{book.title}</div>
 
                                             <div
-                                                className="book-authors">{book.authors ? book.authors.toString() : ''}</div>
+                                                className="book-authors">{book.authors ? book.authors.join(', ') : ''}</div>
                                         </div>
 
                                     </li>

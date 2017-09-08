@@ -1,9 +1,14 @@
 import React from 'react'
 import './App.css'
-import {Route} from 'react-router-dom'
+import '../node_modules/material-design-lite/material.min.css'
+import '../node_modules/material-design-lite/material.min.js'
+
+
+import {Switch,Route} from 'react-router-dom'
 // import {Link} from 'react-router-dom'
 import ListBooks from './ListBooks'
 import AddBook from './AddBook'
+import noMatch from './noMatch'
 import * as BooksApi from './BooksAPI'
 
 class BooksApp extends React.Component {
@@ -36,6 +41,9 @@ class BooksApp extends React.Component {
 
         BooksApi.update(book, value).then(res => {
 
+            book['shelf'] = value;
+
+
 
             if (value === 'none') {
                 this.setState({
@@ -43,18 +51,25 @@ class BooksApp extends React.Component {
                 })
             } else {
 
-                this.setState({
-                    books: this.state.books.map((b) =>{
 
-                        if(book.id===b.id){
-                            return {...book,shelf:value}
+                this.setState(previousState => ({
 
-                        }
-                        else{
-                            return b
-                        }
-                    })
-                })
+                    books: previousState.books.filter(b=> b.id !== book.id).concat([book])
+                }));
+
+
+                // this.setState({
+                //     books: this.state.books.map((b) =>{
+                //
+                //         if(book.id===b.id){
+                //             return {...book,shelf:value}
+                //
+                //         }
+                //         else{
+                //             return b
+                //         }
+                //     })
+                // })
             }
 
 
@@ -71,24 +86,34 @@ class BooksApp extends React.Component {
         return (
             <div className="app">
 
-                <Route exact path="/" render={() => (
-                    <ListBooks
-                        books={this.state.books}
+                <Switch>
+                    <Route exact path="/" render={() => (
+                        <ListBooks
+                            books={this.state.books}
 
-                        handleOnChange={this.updateBook}
-
-
-                    />
-                )}/>
-
-                <Route exact path="/search" render={() => (
-                    <AddBook
-                        books={this.state.books}
-                        handleOnChange={this.updateBook}
+                            handleOnChange={this.updateBook}
 
 
-                    />
-                )}/>
+                        />
+                    )}/>
+
+                    <Route exact path="/search" render={() => (
+                        <AddBook
+                            books={this.state.books}
+                            handleOnChange={this.updateBook}
+
+
+                        />
+
+
+
+                    )}/>
+
+                    <Route component={noMatch}/>
+
+
+                </Switch>
+
 
 
             </div>

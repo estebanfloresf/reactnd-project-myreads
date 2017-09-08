@@ -32,7 +32,7 @@ class ListBooks extends Component {
                 <div className="list-books-content">
                     <div>
                         <div className="bookshelf">
-                            <h3 className="bookshelf-title">Currently Reading</h3>
+                            <h4 className="bookshelf-title">Currently Reading</h4>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
 
@@ -47,7 +47,7 @@ class ListBooks extends Component {
                                                             <div className="book-cover" style={{
                                                                 width: 128,
                                                                 height: 193,
-                                                                backgroundImage: `url(${book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''})`
+                                                                backgroundImage: `url(${book.imageLinks? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193'})`
                                                             }}/>
                                                             <div className="book-shelf-changer">
                                                                 <select onChange={(e) => handleOnChange(book, e)}
@@ -64,7 +64,7 @@ class ListBooks extends Component {
                                                         <div className="book-title">{book.title}</div>
 
                                                         <div
-                                                            className="book-authors">{book.authors ? book.authors.toString() : ''}</div>
+                                                            className="book-authors">{book.authors ? book.authors.join(', ') : ''}</div>
                                                     </div>
 
                                                 </li>
@@ -79,7 +79,7 @@ class ListBooks extends Component {
                             </div>
                         </div>
                         <div className="bookshelf">
-                            <h3 className="bookshelf-title">Want to Read</h3>
+                            <h4 className="bookshelf-title">Want to Read</h4>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
 
@@ -94,7 +94,7 @@ class ListBooks extends Component {
                                                             <div className="book-cover" style={{
                                                                 width: 128,
                                                                 height: 193,
-                                                                backgroundImage: `url(${book.imageLinks.thumbnail})`
+                                                                backgroundImage: `url(${book.imageLinks? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193'})`
                                                             }}/>
                                                             <div className="book-shelf-changer">
                                                                 <select onChange={(e) => handleOnChange(book, e)}
@@ -111,7 +111,7 @@ class ListBooks extends Component {
                                                         <div className="book-title">{book.title}</div>
 
                                                         <div
-                                                            className="book-authors">{book.authors ? book.authors.toString() : ''}</div>
+                                                            className="book-authors">{book.authors ? book.authors.join(', ') : ''}</div>
                                                     </div>
 
                                                 </li>
@@ -126,7 +126,7 @@ class ListBooks extends Component {
                             </div>
                         </div>
                         <div className="bookshelf">
-                            <h3 className="bookshelf-title">Read</h3>
+                            <h4 className="bookshelf-title">Read</h4>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
 
@@ -136,29 +136,39 @@ class ListBooks extends Component {
                                                 <li key={book.id}>
 
 
+
+
+
                                                     <div className="book">
                                                         <div className="book-top">
                                                             <div className="book-cover" style={{
                                                                 width: 128,
                                                                 height: 193,
-                                                                backgroundImage: `url(${book.imageLinks.thumbnail})`
+                                                                backgroundImage: `url(${book.imageLinks? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193'})`
                                                             }}/>
+
+
+
                                                             <div className="book-shelf-changer">
-                                                                <select onChange={(e) => handleOnChange(book, e)}
-                                                                        value={book.shelf}>
-                                                                    <option value="none" disabled>Move to...</option>
-                                                                    <option value="currentlyReading">Currently Reading
-                                                                    </option>
-                                                                    <option value="wantToRead">Want to Read</option>
-                                                                    <option value="read">Read</option>
-                                                                    <option value="none">None</option>
-                                                                </select>
+
+
+                                                                <button id="menu-speed" className="mdl-button mdl-js-button mdl-button--icon">
+                                                                    <i className="material-icons">more_vert</i>
+                                                                </button>
+                                                                <ul className="mdl-menu mdl-js-menu" htmlFor="menu-speed">
+                                                                    <li className="mdl-menu__item">Fast</li>
+                                                                    <li className="mdl-menu__item">Medium</li>
+                                                                    <li className="mdl-menu__item">Slow</li>
+                                                                </ul>
+
+
+
                                                             </div>
                                                         </div>
                                                         <div className="book-title">{book.title}</div>
 
                                                         <div
-                                                            className="book-authors">{book.authors ? book.authors.toString() : ''}</div>
+                                                            className="book-authors">{book.authors ? book.authors.join(', ') : ''}</div>
                                                     </div>
 
                                                 </li>
