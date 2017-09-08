@@ -11,6 +11,7 @@ class ListBooks extends Component {
     };
 
 
+
     render() {
         const {handleOnChange, books} = this.props;
 
@@ -18,16 +19,20 @@ class ListBooks extends Component {
         const wantToRead = books.filter((book) => book.shelf === 'wantToRead');
         const read = books.filter((book) => book.shelf === 'read');
 
+
         return (
 
             <div className="list-books">
                 <div className="list-books-title">
                     <h1>MyReads</h1>
                 </div>
+
+
+
                 <div className="list-books-content">
                     <div>
                         <div className="bookshelf">
-                            <h2 className="bookshelf-title">Currently Reading</h2>
+                            <h3 className="bookshelf-title">Currently Reading</h3>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
 
@@ -42,7 +47,7 @@ class ListBooks extends Component {
                                                             <div className="book-cover" style={{
                                                                 width: 128,
                                                                 height: 193,
-                                                                backgroundImage: `url(${book.imageLinks.thumbnail?book.imageLinks.thumbnail:''})`
+                                                                backgroundImage: `url(${book.imageLinks.thumbnail ? book.imageLinks.thumbnail : ''})`
                                                             }}/>
                                                             <div className="book-shelf-changer">
                                                                 <select onChange={(e) => handleOnChange(book, e)}
@@ -74,7 +79,7 @@ class ListBooks extends Component {
                             </div>
                         </div>
                         <div className="bookshelf">
-                            <h2 className="bookshelf-title">Want to Read</h2>
+                            <h3 className="bookshelf-title">Want to Read</h3>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
 
@@ -121,7 +126,7 @@ class ListBooks extends Component {
                             </div>
                         </div>
                         <div className="bookshelf">
-                            <h2 className="bookshelf-title">Read</h2>
+                            <h3 className="bookshelf-title">Read</h3>
                             <div className="bookshelf-books">
                                 <ol className="books-grid">
 
@@ -172,6 +177,7 @@ class ListBooks extends Component {
                 <div className="open-search">
                     <Link to="/search">Add a book</Link>
                 </div>
+
             </div>
 
         );

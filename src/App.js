@@ -8,7 +8,8 @@ import * as BooksApi from './BooksAPI'
 
 class BooksApp extends React.Component {
     state = {
-        books: []
+        books: [],
+
 
 
     };
@@ -17,17 +18,20 @@ class BooksApp extends React.Component {
     componentDidMount() {
 
 
+
         BooksApi.getAll().then((books) => {
             this.setState({books});
 
         });
-        console.log(this.state.books);
+
     }
+
 
 
     updateBook = (book, value) => {
 
         value = value.target.value.trim();
+
 
 
         BooksApi.update(book, value).then(res => {
@@ -58,10 +62,6 @@ class BooksApp extends React.Component {
 
 
 
-        // if(e.target.value === 'wantToRead'){
-        //     alert('hey your book'+book.title+' has been added to your bookshelve '+e.target.value);
-        // }
-
 
     };
 
@@ -74,6 +74,7 @@ class BooksApp extends React.Component {
                 <Route exact path="/" render={() => (
                     <ListBooks
                         books={this.state.books}
+
                         handleOnChange={this.updateBook}
 
 
