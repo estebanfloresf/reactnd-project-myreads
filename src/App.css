@@ -10,6 +10,23 @@ body, .app {
 
 /* main page */
 
+
+.mdl-demo .mdl-layout__header-row {
+  padding-left: 40px;
+}
+.mdl-demo section > header{
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+
 .list-books-title {
   padding: 10px 0;
   background: #2e7c31;
@@ -22,6 +39,7 @@ body, .app {
 }
 
 .list-books-content {
+
   padding: 0 0 80px;
   flex: 1;
 }
@@ -38,6 +56,7 @@ body, .app {
 
 .bookshelf-title {
   border-bottom: 1px solid #dedede;
+  text-transform: capitalize;
 }
 .bookshelf-books {
   text-align: center;
@@ -187,16 +206,24 @@ body, .app {
   color: #fff;
 }
 
-/*Books*/
-.demo-card-square.mdl-card {
-  width: 320px;
-  height: 320px;
-}
-.demo-card-square > .mdl-card__title {
-  color: #fff;
-  background:
-          url('../public/dog.png') bottom right 15% no-repeat #46B6AC;
+/*books*/
 
+
+.mdl-card{
+  width: 250px;
+}
+.mdl-card__media{
+
+  /*height:193px;*/
+  background-color: #d5d8df;
+  justify-content: center;
+}
+
+
+.mdl-card__media > img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 
@@ -217,6 +244,7 @@ body, .app {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
+  flex-direction: column;
 }
 
 .demo-header .mdl-layout__header-row {
@@ -224,9 +252,9 @@ body, .app {
 }
 
 .demo-container {
-  max-width: 1600px;
-  width: calc(100% - 16px);
-  margin: 0 auto;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 .demo-content {

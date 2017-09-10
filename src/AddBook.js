@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
-
 import * as BooksApi from './BooksAPI'
+import Book from './Book';
 
 
 class AddBook extends Component {
@@ -112,34 +112,12 @@ class AddBook extends Component {
                                     <li key={book.id}>
 
 
-                                        <div className="book">
-                                            <div className="book-top">
-                                                <div className="book-cover" style={{
-                                                    width: 128,
-                                                    height: 193,
-                                                    backgroundImage: `url(${book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193'})`
-                                                }}/>
-                                                <div className="book-shelf-changer">
+                                        <Book
+                                            book={book}
+                                            handleOnChange={handleOnChange}
+                                        />
 
 
-
-
-
-                                                    <select onChange={(e) => handleOnChange(book, e)}
-                                                            value={book.shelf ? book.shelf : 'none'}>
-                                                        <option value="disabled" disabled>Move to...</option>
-                                                        <option value="currentlyReading">Currently Reading</option>
-                                                        <option value="wantToRead">Want to Read</option>
-                                                        <option value="read">Read</option>
-                                                        <option value="none">None</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div className="book-title">{book.title}</div>
-
-                                            <div
-                                                className="book-authors">{book.authors ? book.authors.join(', ') : ''}</div>
-                                        </div>
 
                                     </li>
 

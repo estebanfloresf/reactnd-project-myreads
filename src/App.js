@@ -1,7 +1,7 @@
 import React from 'react'
-import './App.css'
 import '../node_modules/material-design-lite/material.min.css'
 import '../node_modules/material-design-lite/material.min.js'
+import './App.css'
 
 
 import {Switch,Route} from 'react-router-dom'
@@ -84,7 +84,8 @@ class BooksApp extends React.Component {
     render() {
 
         return (
-            <div className="app">
+            <div>
+
 
                 <Switch>
                     <Route exact path="/" render={() => (
@@ -113,6 +114,9 @@ class BooksApp extends React.Component {
 
 
                 </Switch>
+
+
+
 
 
 

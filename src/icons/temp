@@ -1,0 +1,44 @@
+       <div className="list-books">
+                <div className="list-books-title">
+                    <h1>MyReads</h1>
+                </div>
+
+
+
+
+                <div className="list-books-content">
+
+
+                    <button id="demo-menu-top-right"
+                            className="mdl-button mdl-js-button mdl-button--icon">
+                        <i className="material-icons">more_vert</i>
+                    </button>
+
+                    <ul className="mdl-menu mdl-menu--top-right mdl-js-menu mdl-js-ripple-effect"
+                        htmlFor="demo-menu-top-right">
+                        <li className="mdl-menu__item">Some Action</li>
+                        <li className="mdl-menu__item">Another Action</li>
+                        <li disabled className="mdl-menu__item">Disabled Action</li>
+                        <li className="mdl-menu__item">Yet Another Action</li>
+                    </ul>
+
+
+                    {shelves.map((shelf) => (
+                        <div key={shelf}>
+                            <Shelf
+
+                                books={books}
+                                title={shelf}
+                                handleOnChange={handleOnChange}
+                            />
+                        </div>
+
+                    ))}
+
+
+                </div>
+                <div className="open-search">
+                    <Link to="/search">Add a book</Link>
+                </div>
+
+            </div>
