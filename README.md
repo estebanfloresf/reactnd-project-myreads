@@ -6,7 +6,7 @@ everything we have learned throughout the first course.
 This project mainly consists of a web app that has list page showing the books I am currently reading, read or want to read (these are the 3 bookshelves to be shown as well.)
 It also has a search page, to add more books to my library and set the state of each book I am currently searching, and if the book is already in my library it shows on what shelf it is.
 
-#Installation
+# Installation
 To get started to review and/or run the project:
 
 * install all project dependencies with `npm install`
