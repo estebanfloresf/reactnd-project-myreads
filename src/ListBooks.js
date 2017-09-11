@@ -8,20 +8,14 @@ class ListBooks extends Component {
 
     static propTypes = {
         books: PropTypes.array.isRequired,
-
     };
-
 
     render() {
         const {handleOnChange, books} = this.props;
 
         const shelves = ['currently Reading', 'want To Read', 'read'];
 
-
         return (
-
-
-
 
             <div className="list-books">
                 <div className="list-books-title">
@@ -30,35 +24,28 @@ class ListBooks extends Component {
 
 
                 <div className="list-books-content">
-                        <div>
+                    <div>
 
+                        {shelves.map((shelf) => (
+                            <div key={shelf}>
+                                <Shelf
 
-                            {shelves.map((shelf) => (
-                                <div key={shelf}>
-                                    <Shelf
+                                    books={books}
+                                    title={shelf}
+                                    handleOnChange={handleOnChange}
+                                />
+                            </div>
 
-                                        books={books}
-                                        title={shelf}
-                                        handleOnChange={handleOnChange}
-                                    />
-                                </div>
-
-                            ))}
-
-
-                        </div>
-                        <div className="open-search">
-                            <Link to="/search">Add a book</Link>
-                        </div>
-
-
+                        ))}
 
                     </div>
-
+                    <div className="open-search">
+                        <Link to="/search">Add a book</Link>
+                    </div>
 
                 </div>
 
-
+            </div>
 
         );
     }

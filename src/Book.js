@@ -10,17 +10,12 @@ class Book extends Component {
 
                 <div className="book-top">
 
+                    <div className="book-cover">
+                        <img src={book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193'} alt="book"/>
+                    </div>
 
-
-                    <div className="book-cover" style={{
-                        width: 128,
-                        height: 193,
-                        backgroundImage: `url(${book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193'})`
-                    }}/>
 
                     <div className="book-shelf-changer">
-
-
 
                         <select onChange={(e) => handleOnChange(book, e)}
                                 value={book.shelf ? book.shelf : 'none'}>
@@ -38,21 +33,10 @@ class Book extends Component {
                 <div
                     className="book-authors">{book.authors ? book.authors.join(', ') : ''}
                 </div>
-
-
-
-
-
             </div>
-
-
-
-
 
         )
     }
-
 }
-
 
 export default Book;

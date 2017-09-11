@@ -22,20 +22,32 @@ class AddBook extends Component {
         this.setState(
             {query: query},
             () => {
-                BooksApi.search(query, 10).then((querybooks) => {
-                    this.setState({querybooks});
-                });
+                BooksApi.search(query, 10)
+                    .then((querybooks) => {
+
+
+                        if(querybooks.error){
+                            this.setState({querybooks:[]})
+                        }
+                        else{
+
+                            this.setState({querybooks});
+
+                        }
+
+                    })
+
             }
         );
 
     };
 
 
+
     loadList = function (query) {
 
 
         if (query) {
-
 
             const showingBooks = this.state.querybooks;
 
@@ -53,9 +65,7 @@ class AddBook extends Component {
                 return showingBooks;
             }
 
-
         }
-
 
         return []
 
@@ -69,28 +79,13 @@ class AddBook extends Component {
         const {handleOnChange} = this.props;
         let showingBooks = this.loadList(query);
 
+
         return (
 
-
-
             <div className="search-books">
-
-
-
                 <div className="search-books-bar">
                     <Link className="close-search" to="/">Close</Link>
-
                     <div className="search-books-input-wrapper">
-                        {/*
-                NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                You can find these search terms here:
-                https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                you don't find a specific author or title. Every search is limited by search terms.
-                */}
-
-
                         <input
                             className="mdl-textfield__input"
                             id="sample1"
@@ -99,37 +94,34 @@ class AddBook extends Component {
                             value={query}
                             onChange={(event) => this.updateQuery(event.target.value)}
                         />
-
-
                     </div>
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
 
-
                         {showingBooks.length > 0 && (
                             showingBooks.map((book) => (
                                     <li key={book.id}>
-
-
                                         <Book
                                             book={book}
                                             handleOnChange={handleOnChange}
                                         />
-
-
-
                                     </li>
 
                                 )
                             )
+                        )}
+                        {showingBooks.length === 0 && query &&(
+                            <div>
+                                Sorry, no results found for your search. Try any of the following  <a href="https://github.com/estebanfloresf/reactnd-project-myreads/blob/master/SEARCH_TERMS.md">Terms</a>
+
+                            </div>
                         )}
                     </ol>
                 </div>
             </div>
         )
     }
-
 }
 
 export default AddBook;
